@@ -1,0 +1,65 @@
+{
+  "name": "json-to-figma-styles",
+  "version": "1.0.0",
+  "description": "Convert JSON design tokens to Figma styles",
+  "main": "code.js",
+  "scripts": {
+    "build": "npm run build:ui && npm run build:plugin",
+    "build:ui": "webpack --config webpack.config.js --mode production",
+    "build:plugin": "webpack --config webpack.plugin.config.js --mode production",
+    "build:dev": "npm run build:ui:dev && npm run build:plugin:dev",
+    "build:ui:dev": "webpack --config webpack.config.js --mode development",
+    "build:plugin:dev": "webpack --config webpack.plugin.config.js --mode development",
+    "watch:ui": "webpack --config webpack.config.js --mode development --watch",
+    "watch:plugin": "webpack --config webpack.plugin.config.js --mode development --watch",
+    "clean": "rm -f code.js ui.html ui.js ui.bundle.js *.map dist/*.js dist/*.map",
+    "rebuild": "npm run clean && npm run build",
+    "lint": "eslint --ext .ts,.tsx --ignore-pattern node_modules .",
+    "lint:fix": "eslint --ext .ts,.tsx --ignore-pattern node_modules --fix ."
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@figma/eslint-plugin-figma-plugins": "*",
+    "@figma/plugin-typings": "*",
+    "@typescript-eslint/eslint-plugin": "^6.12.0",
+    "@typescript-eslint/parser": "^6.12.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "css-loader": "^6.8.1",
+    "eslint": "^8.54.0",
+    "html-webpack-plugin": "^5.5.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "style-loader": "^3.3.3",
+    "ts-loader": "^9.4.4",
+    "typescript": "^5.3.2",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  },
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:@figma/figma-plugins/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "project": "./tsconfig.json"
+    },
+    "root": true,
+    "rules": {
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "argsIgnorePattern": "^_",
+          "varsIgnorePattern": "^_",
+          "caughtErrorsIgnorePattern": "^_"
+        }
+      ]
+    }
+  }
+}
