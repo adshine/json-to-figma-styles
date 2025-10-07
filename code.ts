@@ -4,7 +4,7 @@
 // full browser environment (See https://www.figma.com/plugin-docs/how-plugins-run).
 
 // This shows the HTML page in "ui.html".
-figma.showUI(__html__, { width: 600, height: 800 });
+figma.showUI(__html__, { width: 420, height: 560 });
 
 // Calls to "parent.postMessage" from within the HTML page will trigger this
 // callback. The callback will be passed the "pluginMessage" property of the
@@ -101,7 +101,7 @@ function findExistingStyle<T extends BaseStyle>(
 // Process paint styles
 async function processPaintStyles(paintStyles: any[]): Promise<any[]> {
   const results: any[] = [];
-  const existingStyles = figma.getLocalPaintStyles();
+  const existingStyles = await figma.getLocalPaintStylesAsync();
 
   for (const paintStyle of paintStyles) {
     try {
@@ -129,7 +129,7 @@ async function processPaintStyles(paintStyles: any[]): Promise<any[]> {
       }
 
       // Store metadata
-      const style = existing || figma.getLocalPaintStyles().find(s => s.name === paintStyle.name);
+      const style = existing || (await figma.getLocalPaintStylesAsync()).find(s => s.name === paintStyle.name);
       if (style) {
         style.setPluginData('source', JSON.stringify(paintStyle));
         style.setPluginData('json2styles-version', '1.0.0');
@@ -232,7 +232,7 @@ function convertPaintStyle(paintStyle: any): any[] {
 // Process text styles
 async function processTextStyles(textStyles: any[]): Promise<any[]> {
   const results: any[] = [];
-  const existingStyles = figma.getLocalTextStyles();
+  const existingStyles = await figma.getLocalTextStylesAsync();
 
   for (const textStyle of textStyles) {
     try {
@@ -260,7 +260,7 @@ async function processTextStyles(textStyles: any[]): Promise<any[]> {
       }
 
       // Store metadata
-      const style = existing || figma.getLocalTextStyles().find(s => s.name === textStyle.name);
+      const style = existing || (await figma.getLocalTextStylesAsync()).find(s => s.name === textStyle.name);
       if (style) {
         style.setPluginData('source', JSON.stringify(textStyle));
         style.setPluginData('json2styles-version', '1.0.0');
@@ -334,7 +334,7 @@ async function convertTextStyle(textStyle: any): Promise<any> {
 // Process effect styles
 async function processEffectStyles(effectStyles: any[]): Promise<any[]> {
   const results: any[] = [];
-  const existingStyles = figma.getLocalEffectStyles();
+  const existingStyles = await figma.getLocalEffectStylesAsync();
 
   for (const effectStyle of effectStyles) {
     try {
@@ -362,7 +362,7 @@ async function processEffectStyles(effectStyles: any[]): Promise<any[]> {
       }
 
       // Store metadata
-      const style = existing || figma.getLocalEffectStyles().find(s => s.name === effectStyle.name);
+      const style = existing || (await figma.getLocalEffectStylesAsync()).find(s => s.name === effectStyle.name);
       if (style) {
         style.setPluginData('source', JSON.stringify(effectStyle));
         style.setPluginData('json2styles-version', '1.0.0');
@@ -441,7 +441,7 @@ function convertEffectStyle(effectStyle: any): any[] {
 // Process grid styles
 async function processGridStyles(gridStyles: any[]): Promise<any[]> {
   const results: any[] = [];
-  const existingStyles = figma.getLocalGridStyles();
+  const existingStyles = await figma.getLocalGridStylesAsync();
 
   for (const gridStyle of gridStyles) {
     try {
@@ -469,7 +469,7 @@ async function processGridStyles(gridStyles: any[]): Promise<any[]> {
       }
 
       // Store metadata
-      const style = existing || figma.getLocalGridStyles().find(s => s.name === gridStyle.name);
+      const style = existing || (await figma.getLocalGridStylesAsync()).find(s => s.name === gridStyle.name);
       if (style) {
         style.setPluginData('source', JSON.stringify(gridStyle));
         style.setPluginData('json2styles-version', '1.0.0');
